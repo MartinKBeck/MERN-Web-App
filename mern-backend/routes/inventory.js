@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 
 const Inventory = require('../models/inventory');
+const User = require('../models/user');
 
 // Handle incoming GET requests to view all possible items
 router.get('/', (req, res, next) => {
@@ -19,7 +20,7 @@ router.get('/', (req, res, next) => {
 
 // Handle incoming GET requests to view all user items
 router.get('/:userId', (req, res, next) => {
-    Inventory.find({user:req.params.userId}, function(err, inventory) {
+    Inventory.find({userId:req.params.userId}, function(err, inventory) {
         if (err) {
             res.status(500).send('Error pulling Inventory')
         }
@@ -52,14 +53,28 @@ router.get('/item/:invId', (req, res, next) => {
 
 // Handle incoming POST requests to create items
 router.post('/', (req, res, next) => {
-    let inventory = new Inventory({user: req.body.user, description: req.body.description, quantity: req.body.quantity})
-    inventory.save()
+    User.findById(req.body.userId)
+    .exec()
+    .then(user =>{
+        if(!user) {
+            return res.status(400).json({
+                message: "User does not exist"
+            })
+        }
+        let inventory = new Inventory({userId: req.body.userId, description: req.body.description, quantity: req.body.quantity})
+        inventory.save()
         .then(inventory => {
             res.status(201).json({'message': 'Item added to inventory.'})
         })
         .catch(err => {
             res.status(400).send('Adding new item failed');
         });
+    })   
+    .catch(err => {
+        res.status(500).json({
+            error: err
+        })
+    }) 
 });
 
 // Handle incoming DELETE requests to remove items

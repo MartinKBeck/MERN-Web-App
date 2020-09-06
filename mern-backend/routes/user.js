@@ -40,7 +40,7 @@ router.get('/:userId', (req, res, next) => {
 
 // Handle incoming POST requests to create User
 router.post('/', (req, res, next) => {
-    let user = new User({username: req.body.username, password: req.body.password, company: req.body.company})
+    let user = new User({username: req.body.username, password: req.body.password, email: req.body.email})
     user.save()
         .then(user => {
             res.status(201).json({'message': 'User Created.'})
