@@ -13,8 +13,12 @@
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+<<<<<<< HEAD
     "mongodb": "^3.6.0",
     "mongoose": "^5.10.2",
     "morgan": "^1.10.0"
+=======
+    "mongodb": "^3.6.0"
+>>>>>>> 92eba168b4a9ba97e25f65c23a697d2e5f3d5129
   }
 }
