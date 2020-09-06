@@ -1,20 +1,10 @@
-const express = require('express');
-const app = express();
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const invRoutes = express.Router();
-const MongoClient = require('mongodb').MongoClient;
-const PORT = 4000;
+const http = require('http');
+const app = require('./app');
 
-var credentials = require('./credentials.json');
+const port = process.env.PORT || 4000;
 
-app.use(cors());
-app.use(bodyParser.json());
+const server = http.createServer(app);
 
-invRoutes.route('/').get
-
-app.use('/inv', invRoutes);
-
-app.listen(PORT, function() {
-    console.log("Server is running on Port: " + PORT)
+server.listen(port, function() {
+    console.log("Server is running on Port: " + port)
 })
