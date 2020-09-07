@@ -1,4 +1,5 @@
 import React from "react";
+import axios from 'axios';
 import loginImg from "../../login.svg";
 
 export class Login extends React.Component {
@@ -12,9 +13,7 @@ export class Login extends React.Component {
     this.state = {
       username: '',
       password: ''
-
     }
-
   }
 
   onChangeUsername(e){
@@ -32,9 +31,13 @@ export class Login extends React.Component {
   onSubmit(e) {
     e.preventDefault();
 
-    console.log(`Form submitted:`);
-    console.log(`Username: ${this.state.username}`)
-    console.log(`Password: ${this.state.password}`)
+    const checkUser = {
+      username: this.state.username,
+      password: this.state.password
+    }
+
+    axios.post('http://localhost:4000/user/verify', checkUser)
+    .then(res => console.log(res.data));
 
     this.setState({
       username: '',

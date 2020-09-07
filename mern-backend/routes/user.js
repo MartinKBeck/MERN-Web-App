@@ -18,14 +18,12 @@ router.get('/', (req, res, next) => {
 })
 
 // Handle incoming GET request to verify user
-router.get('/verify', (req,res,next) => {
+router.post('/verify', (req,res,next) => {
     User.findOne({username:req.body.username, password:req.body.password})
     .exec()
     .then(user => {
         if(!user) {
-            return res.status(400).json({
-                message: 'User not found'
-            })
+            return res.status(400).send('No User')
         }
         else {
             return res.status(200).send('Verified')
