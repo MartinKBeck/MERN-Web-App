@@ -17,6 +17,11 @@ router.get('/', (req, res, next) => {
     })
 })
 
+// Handle incoming GET request to verify user
+router.get('/verify', (req,res,next) => {
+    User.find()
+})
+
 // Handle incoming specified GET requests to view single item
 router.get('/:userId', (req, res, next) => {
     User.findById(req.params.userId)
