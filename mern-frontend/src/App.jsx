@@ -6,7 +6,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoginActive: true
+      isLogginActive: true
     };
   }
 
@@ -16,30 +16,30 @@ class App extends React.Component {
   }
 
   changeState() {
-    const { isLoginActive } = this.state;
+    const { isLogginActive } = this.state;
 
-    if (isLoginActive) {
+    if (isLogginActive) {
       this.rightSide.classList.remove("right");
       this.rightSide.classList.add("left");
     } else {
       this.rightSide.classList.remove("left");
       this.rightSide.classList.add("right");
     }
-    this.setState(prevState => ({ isLoginActive: !prevState.isLoginActive }));
+    this.setState(prevState => ({ isLogginActive: !prevState.isLogginActive }));
   }
 
   render() {
-    const { isLoginActive } = this.state;
-    const current = isLoginActive ? "Register" : "Login";
-    const currentActive = isLoginActive ? "login" : "register";
+    const { isLogginActive } = this.state;
+    const current = isLogginActive ? "Register" : "Login";
+    const currentActive = isLogginActive ? "login" : "register";
     return (
       <div className="App">
         <div className="login">
           <div className="container" ref={ref => (this.container = ref)}>
-            {isLoginActive && (
+            {isLogginActive && (
               <Login containerRef={ref => (this.current = ref)} />
             )}
-            {!isLoginActive && (
+            {!isLogginActive && (
               <Register containerRef={ref => (this.current = ref)} />
             )}
           </div>
