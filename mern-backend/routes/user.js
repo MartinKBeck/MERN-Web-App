@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
+const jwtSecret = 'secret123';
 
 // Handle incoming GET requests to view all items
 router.get('/', (req, res, next) => {
@@ -17,16 +19,22 @@ router.get('/', (req, res, next) => {
     })
 })
 
-// Handle incoming GET request to verify user
-router.post('/verify', (req,res,next) => {
+// Handle incoming GET request to authorize user
+router.post('/auth', (req,res,next) => {
     User.findOne({username:req.body.username, password:req.body.password})
     .exec()
     .then(user => {
         if(!user) {
-            return res.status(400).send('No User')
+            return res.status(401).json({errors: {form: 'Invalid Credentials'}});
         }
         else {
-            return res.status(200).send('Verified')
+            const token = jwt.sign({
+                id: user._id,
+                username: user.username
+            }, jwtSecret);
+            return res.status(200).json({
+                token
+            })
         }
     })
     .catch(err =>{

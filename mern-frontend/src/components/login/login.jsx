@@ -1,6 +1,8 @@
 import React from "react";
 import axios from 'axios';
 import loginImg from "../../login.svg";
+import setAuthorizationToken from "../../utils/authActions";
+import jwt from 'jsonwebtoken';
 
 export class Login extends React.Component {
   constructor(props) {
@@ -36,8 +38,14 @@ export class Login extends React.Component {
       password: this.state.password
     }
 
-    axios.post('http://localhost:4000/user/verify', checkUser)
-    .then(res => console.log(res.data));
+    axios.post('http://localhost:4000/user/auth', checkUser)
+    .then(res => {
+      const token = res.data.token;
+      console.log('Token: ' ,token)
+      localStorage.setItem('jwtToken', token);
+      setAuthorizationToken(token)
+      console.log(jwt.decode(token))
+    });
 
     this.setState({
       username: '',
@@ -72,7 +80,7 @@ export class Login extends React.Component {
               onChange={this.onChangePassword}/>
             </div>
             <div className="form-group">
-              <button type="submit">Register</button>
+              <button type="submit">Login</button>
             </div>
           </form>
         </div>
