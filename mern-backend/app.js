@@ -3,12 +3,9 @@ const app = express();
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cors = require('cors');
-const assert = require('assert');
 const mongoose = require('mongoose')
 
 const inventoryRoutes = require('./routes/inventory')
-const userRoutes = require('./routes/user')
-const { callbackify } = require('util');
 
 // Pulling in credentials from file
 var credentials = require('./credentials.json');
@@ -36,7 +33,6 @@ mongoose.connect(uri, {
 
 // Routes that should handle requests
 app.use('/inv', inventoryRoutes);
-app.use('/user', userRoutes);
 
 // Catch errors that go beyond the above routes
 app.use((req, res, next) => {
