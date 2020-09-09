@@ -45,16 +45,16 @@ export default class InventoryList extends Component {
         return (
             <div>
                 <h3>Inventory List</h3>
-                <table className="table table-striped" style={{marginTop:20}}>
+                <table className="table table-striped table-bordered table-hover" style={{marginTop:20}}>
                     <thead>
                         <tr>
                             <th>Description</th>
                             <th>Quantity</th>
-                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         {this.inventoryList()}
+                        
                     </tbody>
                 </table>
             </div>

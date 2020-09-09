@@ -37,6 +37,25 @@ router.get('/:invId', (req, res, next) => {
     })
 })
 
+// Handle incoming PATCH requests to modify inventory
+router.patch('/:invId', (req, res, next) => {
+    const id = req.params.invId;
+    Inventory.updateOne({_id:id}, {$set: {quantity: req.body.quantity}})
+    .exec()
+    .then(result =>{
+        
+        res.status(200).json({
+            message: 'Inventory Update'
+        })
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json({
+            error: err
+        })
+    })
+})
+
 // Handle incoming POST requests to create items
 router.post('/', (req, res, next) => {
     let inventory = new Inventory({description: req.body.description, quantity: req.body.quantity})
