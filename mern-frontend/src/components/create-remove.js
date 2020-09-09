@@ -55,7 +55,7 @@ export default class UpdateList extends Component {
         // console.log(this.state.inventory)
         var newQuantity = Number(quantity) + Number(amount)
         
-        // Helper function to change state to trigger component lifecycle
+        // Helper function  to change state to trigger component lifecycle
         this.onChangeQuantity(newQuantity, index)
         
         // Setting up object to be sent in patch request
@@ -76,7 +76,7 @@ export default class UpdateList extends Component {
                     <thead>
                         <tr>
                             <th>Description</th>
-                            <th>Current Quantity</th>
+                            <th>Quantity</th>
                             <th>Actions</th>
                         </tr>
                     </thead>

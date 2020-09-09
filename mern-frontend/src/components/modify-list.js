@@ -37,6 +37,23 @@ export default class UpdateList extends Component {
         })
     }
 
+    // Function for clicking button
+    changeInventory(id, amount, quantity, index){
+        var newQuantity = Number(quantity) + Number(amount)
+        
+        // Helper function to change state to trigger component lifecycle
+        this.onChangeQuantity(newQuantity, index)
+        
+        // Setting up object to be sent in patch request
+        const obj = {
+            quantity: newQuantity
+        }
+        
+        // After state has changed send patch to database to udpate
+        axios.patch('http://localhost:4000/inv/'+id, obj)
+        .then(res => console.log(res.data));
+    }
+
     // Creating function to map out data and create input/buttons
     inventoryList = (inventory) =>{
         
@@ -57,23 +74,6 @@ export default class UpdateList extends Component {
                 </td>
             </tr>
         ))
-    }
-
-    changeInventory(id, amount, quantity, index){
-        // console.log(this.state.inventory)
-        var newQuantity = Number(quantity) + Number(amount)
-        
-        // Helper function to change state to trigger component lifecycle
-        this.onChangeQuantity(newQuantity, index)
-        
-        // Setting up object to be sent in patch request
-        const obj = {
-            quantity: newQuantity
-        }
-        
-        // After state has changed send patch to database to udpate
-        axios.patch('http://localhost:4000/inv/'+id, obj)
-        .then(res => console.log(res.data));
     }
 
     render() {
