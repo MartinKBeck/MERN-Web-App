@@ -21,14 +21,16 @@ export default class InventoryList extends Component {
         })
     }
 
-    // Mapping of data from state
-    inventoryList = (inventory) =>{
-        return inventory.map((inventory) => (
-            <tr>
-                <td>{inventory.description}</td>
-                <td>{inventory.quantity}</td>
-            </tr>
-        ))
+    // Mapping out GET data
+    inventoryList() {
+        return this.state.inventory.map((inventory) =>{
+            return(
+                <tr key={inventory._id}>
+                    <td>{inventory.description}</td>
+                    <td>{inventory.quantity}</td>
+                </tr> 
+            );
+        })
     }
 
     render() {
@@ -43,7 +45,7 @@ export default class InventoryList extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.inventoryList(this.state.inventory)}
+                        {this.inventoryList()}
                     </tbody>
                 </table>
             </div>

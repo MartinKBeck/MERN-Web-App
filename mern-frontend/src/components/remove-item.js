@@ -5,7 +5,7 @@ export default class UpdateList extends Component {
     constructor(props) {
         super(props);
         
-        this.onRemoveItem = this.onRemoveItem.bind(this);
+        this.removeItem = this.removeItem.bind(this);
 
         this.state = {
             inventory: []
@@ -24,7 +24,7 @@ export default class UpdateList extends Component {
     }
 
     // Helper function to change state value, since is array must create copy and modify copy
-    onRemoveItem(index) {
+    onChangeItem(index) {
         // Creating copy of current inventory state
         const holderArray = this.state.inventory.slice()
 
@@ -37,51 +37,34 @@ export default class UpdateList extends Component {
         })
     }
 
-    onRemoveButton(id, index) {
+    // Function called when button is pressed
+    async removeItem(id, index) {
         // After patch has been confirmed to database change state to change component
-        axios.delete('http://localhost:4000/inv/' + id)
+        await axios.delete('http://localhost:4000/inv/' + id)
         .then(res =>{
             // Helper function to remove item from state
-            this.onRemoveItem(index)
+            this.onChangeItem(index)
             console.log(res.data)  
         });
 
     } 
 
-    // Creating function to map out data and create input/buttons
-    inventoryList = (inventory) =>{
-        
-        return inventory.map((inventory, index) => (
-            <tr>
-                <td>{inventory.description}</td>
-                <td>{inventory.quantity}</td>
-                <td>
-
-                    <button type="button" id='btnDelete' class="btn-danger btn-sm" 
-                    onClick={ e => 
+    // Mapping out GET data and create remove button
+    inventoryList() {
+        return this.state.inventory.map((inventory, index) =>{
+            return(
+                <tr key={inventory._id}>
+                    <td>{inventory.description}</td>
+                    <td>{inventory.quantity}</td>
+                    <td>
+                        <button type="button" id='btnDelete' className="btn-danger btn-sm" 
+                        onClick={ e => 
                         window.confirm("Are you sure you want to delete this item?") &&                    
-                        this.onRemoveButton(inventory._id, index)}>Remove</button>                
-                            
-                </td>
-            </tr>
-        ))
-    }
-
-    changeInventory(id, amount, quantity, index){
-        // console.log(this.state.inventory)
-        var newQuantity = Number(quantity) + Number(amount)
-        
-        // Helper function  to change state to trigger component lifecycle
-        this.onChangeQuantity(newQuantity, index)
-        
-        // Setting up object to be sent in patch request
-        const obj = {
-            quantity: newQuantity
-        }
-        
-        // After state has changed send patch to database to udpate
-        axios.patch('http://localhost:4000/inv/'+id, obj)
-        .then(res => console.log(res.data));
+                        this.removeItem(inventory._id, index)}>Remove</button>                    
+                    </td>
+                </tr> 
+            );
+        })
     }
 
     render() {
@@ -97,7 +80,7 @@ export default class UpdateList extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.inventoryList(this.state.inventory)}
+                        {this.inventoryList()}
                         </tbody>
                 </table>
             </div>

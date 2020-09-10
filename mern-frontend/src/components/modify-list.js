@@ -5,7 +5,7 @@ export default class UpdateList extends Component {
     constructor(props) {
         super(props);
         
-        this.changeInventory = this.changeInventory.bind(this);
+        this.modifyQuantity = this.modifyQuantity.bind(this);
         this.onChangeAmount = this.onChangeAmount.bind(this);
         
         this.state = {
@@ -42,7 +42,7 @@ export default class UpdateList extends Component {
     }
 
     // Function for clicking button
-    changeInventory(id, amount, quantity, index){
+    async modifyQuantity(id, amount, quantity, index){
         var newQuantity = Number(quantity) + Number(amount)
         
         // Setting up object to be sent in patch request
@@ -51,7 +51,7 @@ export default class UpdateList extends Component {
         }
         
         // After patch has been confirmed to database change state to change component
-        axios.patch('http://localhost:4000/inv/'+id, obj)
+        await axios.patch('http://localhost:4000/inv/'+id, obj)
         .then(res =>{
             // Helper function to change state to trigger component lifecycle
             this.onChangeQuantity(newQuantity, index)
@@ -60,25 +60,26 @@ export default class UpdateList extends Component {
         
     }
 
-    // Creating function to map out data and create input/buttons
-    inventoryList = (inventory) =>{
-        return inventory.map((inventory, index) => (
-            <tr>
-                <td>{inventory.description}</td>
-                <td>{inventory.quantity}</td>
-                <td>
-                <input type='number' name="amount"
-                onChange={this.onChangeAmount}/>
-                </td>
-                <td>
-                    <div class="btn-toolbar">
-                        <button type="button" id='btnRestock' class="btn-primary btn-sm" onClick={() => this.changeInventory(inventory._id, this.state.amount, inventory.quantity, index)}>Restock</button>
-                        <button type="button" id='btnUse' class="btn-danger btn-sm" onClick={() => this.changeInventory(inventory._id, -this.state.amount, inventory.quantity, index)}>Use</button>
-                    </div>
-                
-                </td>
-            </tr>
-        ))
+    // Mapping out GET data and creating input/buttons
+    inventoryList() {
+        return this.state.inventory.map((inventory, index) =>{
+            return(
+                <tr key={inventory._id}>
+                    <td>{inventory.description}</td>
+                    <td>{inventory.quantity}</td>
+                    <td>
+                        <input type='number' className="form-control"
+                        onChange={this.onChangeAmount}/>
+                    </td>
+                    <td>
+                        <div className="btn-toolbar">
+                            <button type="button" id='btnRestock' className="btn-primary btn-sm" onClick={() => this.modifyQuantity(inventory._id, this.state.amount, inventory.quantity, index)}>Restock</button>
+                            <button type="button" id='btnUse' className="btn-danger btn-sm" onClick={() => this.modifyQuantity(inventory._id, -this.state.amount, inventory.quantity, index)}>Use</button>
+                        </div>
+                    </td>
+                </tr> 
+            );
+        })
     }
 
     render() {
@@ -95,7 +96,7 @@ export default class UpdateList extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.inventoryList(this.state.inventory)}
+                        {this.inventoryList()}
                         </tbody>
                 </table>
             </div>

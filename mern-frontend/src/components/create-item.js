@@ -5,8 +5,9 @@ export default class UpdateList extends Component {
     constructor(props) {
         super(props);
 
-        this.changeInventory = this.changeInventory.bind(this);
-        this.onChangeAmount = this.onChangeAmount.bind(this);
+        this.onChangeDescription = this.onChangeDescription.bind(this);
+        this.onChangeQuantity = this.onChangeQuantity.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
             inventory: [], 
@@ -26,55 +27,85 @@ export default class UpdateList extends Component {
         })
     }
 
-    // Helper function to change state value
-    onChangeAmount(e) {
+    // Function to change state value
+    onChangeDescription(e) {
         this.setState({
-            amount: e.target.value
+            newItemDescription: e.target.value
         });
     }
 
-    // Helper function to change state value, since is array must create copy and modify copy
-    onChangeQuantity(e, index) {
-        const newQuantity = this.state.inventory.slice()
-        newQuantity[index].quantity = e
+    // Function to change state value
+    onChangeQuantity(e) {
         this.setState({
-            inventory: newQuantity
+            newItemQuantity: e.target.value
         })
     }
 
-    // Creating function to map out data and create input/buttons
-    inventoryList = (inventory) =>{
-        
-        return inventory.map((inventory, index) => (
-            <tr>
-                <td>{inventory.description}</td>
-                <td>{inventory.quantity}</td>
-            </tr>
-        ))
+    // Helper function to change state value, since is array must create copy and modify copy
+    onChangeItem(id) {
+        this.setState({
+            inventory: this.state.inventory.concat({description: this.state.newItemDescription, quantity: this.state.newItemQuantity, key:id})
+        })
     }
 
-    changeInventory(id, amount, quantity, index){
-        // console.log(this.state.inventory)
-        var newQuantity = Number(quantity) + Number(amount)
-        
-        // Helper function  to change state to trigger component lifecycle
-        this.onChangeQuantity(newQuantity, index)
-        
-        // Setting up object to be sent in patch request
-        const obj = {
-            quantity: newQuantity
+    // Function called when button is pressed
+    async onSubmit(e) {
+        e.preventDefault()
+
+        const newItem = {
+            description: this.state.newItemDescription,
+            quantity: this.state.newItemQuantity
         }
-        
-        // After state has changed send patch to database to udpate
-        axios.patch('http://localhost:4000/inv/'+id, obj)
-        .then(res => console.log(res.data));
+
+        await axios.post('http://localhost:4000/inv/', newItem)
+        .then(res => {
+            console.log(res.data.message);
+            this.onChangeItem(res.data.id);
+        })
+
+        this.setState({
+            newItemDescription: '',
+            newItemQuantity: ''
+        })
+    }
+
+    // Mapping out GET data
+    inventoryList() {
+        return this.state.inventory.map((inventory) =>{
+            return(
+                <tr key={inventory._id}>
+                    <td>{inventory.description}</td>
+                    <td>{inventory.quantity}</td>
+                </tr> 
+            );
+        })
     }
 
     render() {
         return (
             <div>
                 <h3>Create Items</h3>
-                <h2> Hello</h2>
+                <form onSubmit={this.onSubmit}>
+                    <div className="form-group">
+                        <label>Description: </label>
+                        <input type="text"
+                        className="form-control"
+                        value={this.state.newItemDescription}
+                        onChange={this.onChangeDescription}/>
+                    </div>
+                    <div className="form-group">
+                        <label>Quantity: </label>
+                        <input type="number"
+                        className="form-control"
+                        value={this.state.newItemQuantity}
+                        onChange={this.onChangeQuantity}/>
+                    </div>
+                    <div className="form-group">
+                        <input type="submit" value="Create Item" className="btn btn-success"/>
+                    </div>
+                </form>
+
+                <h4>Previous Items</h4>
                 <table className="table table-striped table-bordered table-hover" style={{marginTop:20}}>
                     <thead>
                         <tr>
@@ -83,10 +114,9 @@ export default class UpdateList extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.inventoryList(this.state.inventory)}
-                        </tbody>
+                        {this.inventoryList()}
+                    </tbody>
                 </table>
             </div>
-        )
-    }
+        )}
 }
