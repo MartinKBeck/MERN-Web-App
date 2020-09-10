@@ -4,10 +4,12 @@ import axios from 'axios';
 export default class UpdateList extends Component {
     constructor(props) {
         super(props);
-        this.state = {inventory: [], amount: ''}
+        
+        this.onRemoveItem = this.onRemoveItem.bind(this);
 
-        this.changeInventory = this.changeInventory.bind(this);
-        this.onChangeAmount = this.onChangeAmount.bind(this);
+        this.state = {
+            inventory: []
+        }
     }
 
     // Starting lifecycle and calling for data from database
@@ -21,21 +23,30 @@ export default class UpdateList extends Component {
         })
     }
 
-    // Helper function to change state value
-    onChangeAmount(e) {
-        this.setState({
-            amount: e.target.value
-        });
-    }
-
     // Helper function to change state value, since is array must create copy and modify copy
-    onChangeQuantity(e, index) {
-        const newQuantity = this.state.inventory.slice()
-        newQuantity[index].quantity = e
+    onRemoveItem(index) {
+        // Creating copy of current inventory state
+        const holderArray = this.state.inventory.slice()
+
+        // Removing chosen item from array
+        holderArray.splice(index, 1)
+
+        // Setting new state
         this.setState({
-            inventory: newQuantity
+            inventory: holderArray
         })
     }
+
+    onRemoveButton(id, index) {
+        // After patch has been confirmed to database change state to change component
+        axios.delete('http://localhost:4000/inv/' + id)
+        .then(res =>{
+            // Helper function to remove item from state
+            this.onRemoveItem(index)
+            console.log(res.data)  
+        });
+
+    } 
 
     // Creating function to map out data and create input/buttons
     inventoryList = (inventory) =>{
@@ -45,7 +56,12 @@ export default class UpdateList extends Component {
                 <td>{inventory.description}</td>
                 <td>{inventory.quantity}</td>
                 <td>
-                        <button type="button" id='btnDelete' class="btn-danger btn-sm" onClick={() => this.changeInventory(inventory._id, -this.state.amount, inventory.quantity, index)}>Remove</button>                
+
+                    <button type="button" id='btnDelete' class="btn-danger btn-sm" 
+                    onClick={ e => 
+                        window.confirm("Are you sure you want to delete this item?") &&                    
+                        this.onRemoveButton(inventory._id, index)}>Remove</button>                
+                            
                 </td>
             </tr>
         ))
@@ -71,7 +87,7 @@ export default class UpdateList extends Component {
     render() {
         return (
             <div>
-                <h3>Restock/Use</h3>
+                <h3>Remove Items</h3>
                 <table className="table table-striped table-bordered table-hover" style={{marginTop:20}}>
                     <thead>
                         <tr>

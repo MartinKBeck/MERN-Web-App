@@ -1,20 +1,16 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
 import axios from 'axios';
-
-const Inventory = props => (
-    <tr>
-        <td>{props.inventory.description}</td>
-        <td>{props.inventory.quantity}</td>
-    </tr>
-)
 
 export default class InventoryList extends Component {
     constructor(props) {
         super(props);
-        this.state = {inventory: []}
+
+        this.state = {
+            inventory: []
+        }
     }
 
+    // When page renders use GET function to pull in data from db
     componentDidMount() {
         axios.get('http://localhost:4000/inv/')
         .then(response => {
@@ -25,20 +21,14 @@ export default class InventoryList extends Component {
         })
     }
 
-    // componentDidUpdate(){
-    //     axios.get('http://localhost:4000/inv/')
-    //     .then(response => {
-    //         this.setState({inventory: response.data});
-    //     })
-    //     .catch(function (error) {
-    //         console.log(error);
-    //     })
-    // }
-
-    inventoryList(){
-        return this.state.inventory.map(function(currentInventory, i) {
-            return <Inventory inventory={currentInventory} key={i} />;
-        })
+    // Mapping of data from state
+    inventoryList = (inventory) =>{
+        return inventory.map((inventory) => (
+            <tr>
+                <td>{inventory.description}</td>
+                <td>{inventory.quantity}</td>
+            </tr>
+        ))
     }
 
     render() {
@@ -53,8 +43,7 @@ export default class InventoryList extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.inventoryList()}
-                        
+                        {this.inventoryList(this.state.inventory)}
                     </tbody>
                 </table>
             </div>

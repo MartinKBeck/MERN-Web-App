@@ -1,10 +1,11 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {BrowserRouter as Router, Route, Link} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 
 import Home from "./components/inventory-list"
 import Update from "./components/modify-list"
-import Change from "./components/create-remove"
+import Create from "./components/create-item"
+import Remove from "./components/remove-item"
 
 
 // Importing logo
@@ -15,7 +16,7 @@ function App() {
     <Router>
       <div className="container">
         <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
-          <a className="navbar-brand" href="https://medium.com/@its.martin.beck" target="_blank">
+          <a className="navbar-brand" href="https://medium.com/@its.martin.beck">
           <img src={logo} width="30" height="30" alt="https://medium.com/@its.martin.beck" />
           </a>
           <Link to="/" className="navbar-brand">MyItems</Link>
@@ -28,7 +29,10 @@ function App() {
                 <Link to="/update" className="nav-link">Restock/Use</Link>
               </li>
               <li className="navbar-item">
-                <Link to="/change" className="nav-link">Create/Remove Items</Link>
+                <Link to="/create" className="nav-link">Create Items</Link>
+              </li>
+              <li className="navbar-item">
+                <Link to="/remove" className="nav-link">Remove Items</Link>
               </li>
             </ul>
           </div>
@@ -36,7 +40,8 @@ function App() {
         
         <Route path="/" exact component={Home} />
         <Route path="/update/" component={Update} />
-        <Route path="/change" component={Change} />
+        <Route path="/create/" component={Create} />
+        <Route path="/remove/" component={Remove} />
       </div>
     </Router>
       );
