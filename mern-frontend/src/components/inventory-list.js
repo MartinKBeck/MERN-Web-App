@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import {TablePagination} from 'react-pagination-table';
-import ReactPaginate from 'react-paginate';
 
 export default class InventoryList extends Component {
     constructor(props) {

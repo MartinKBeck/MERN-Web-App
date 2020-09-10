@@ -7,7 +7,6 @@ import Update from "./components/modify-list"
 import Create from "./components/create-item"
 import Remove from "./components/remove-item"
 
-
 // Importing logo
 import logo from "./Logo.png"
 
