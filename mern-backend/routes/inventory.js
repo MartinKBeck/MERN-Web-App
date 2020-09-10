@@ -39,6 +39,11 @@ router.get('/:invId', (req, res, next) => {
 
 // Handle incoming PATCH requests to modify inventory
 router.patch('/:invId', (req, res, next) => {
+    if(req.body.quantity<0){
+        return res.status(400).json({
+            error: 'Cannot have negative inventory'
+        })
+    }
     const id = req.params.invId;
     Inventory.updateOne({_id:id}, {$set: {quantity: req.body.quantity}})
     .exec()

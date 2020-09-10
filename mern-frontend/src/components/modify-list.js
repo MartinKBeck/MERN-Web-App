@@ -12,7 +12,8 @@ export default class UpdateList extends Component {
             inventory: [], 
             amount: '',
             currentPage: 1 ,
-            paginationCount: 5
+            paginationCount: 5,
+            errors: {}
         }
     }
 
@@ -46,7 +47,9 @@ export default class UpdateList extends Component {
     // Function called when button is pressed
     async modifyQuantity(id, amount, quantity, index){
         var newQuantity = Number(quantity) + Number(amount)
-        
+        if (newQuantity<0){
+            alert("Inventory cannot be less than 0")
+        }
         // Setting up object to be sent in patch request
         const obj = {
             quantity: newQuantity
@@ -79,6 +82,7 @@ export default class UpdateList extends Component {
 
     // Mapping out GET data and creating input/buttons
     inventoryList() {
+        // Slicing data for pagination table
         return this.state.inventory.slice(
             (this.state.paginationCount * (this.state.currentPage - 1)), 
             (this.state.paginationCount * (this.state.currentPage))).map((inventory, index) =>{
