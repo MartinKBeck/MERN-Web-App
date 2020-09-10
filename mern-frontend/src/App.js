@@ -14,8 +14,7 @@ import logo from "./black-twitter-logo.png"
 function App() {
   return (
     <Router>
-      <div className="container">
-        <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
+          <nav className="navbar navbar-expand-sm navbar-dark bg-dark" style={{marginBottom: "20px"}}>
           <a className="navbar-brand" href="https://medium.com/@its.martin.beck">
           <img src={logo} width="30" height="30" alt="https://medium.com/@its.martin.beck" />
           </a>
@@ -42,7 +41,6 @@ function App() {
         <Route path="/update/" component={Update} />
         <Route path="/create/" component={Create} />
         <Route path="/remove/" component={Remove} />
-      </div>
     </Router>
       );
 }

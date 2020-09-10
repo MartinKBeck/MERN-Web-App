@@ -1,16 +1,20 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import {TablePagination} from 'react-pagination-table';
+import ReactPaginate from 'react-paginate';
 
 export default class InventoryList extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            inventory: []
+            inventory: [],
+            currentPage: 1 ,
+            paginationCount: 5
         }
     }
 
-    // When page renders use GET function to pull in data from db
+    // Starting lifecycle and calling for data from database
     componentDidMount() {
         axios.get('http://localhost:4000/inv/')
         .then(response => {
@@ -21,9 +25,29 @@ export default class InventoryList extends Component {
         })
     }
 
+    previousPage = () => {
+        if (this.state.currentPage !==1){
+            this.setState({
+                currentPage: this.state.currentPage - 1})
+        }
+
+    }
+    nextPage = () => {
+        if (this.state.currentPage + 1 <= Math.ceil(this.state.inventory.length/this.state.paginationCount)){
+            this.setState((prevState) => ({currentPage: (prevState.currentPage + 1)}))
+        }
+            
+    }
+
     // Mapping out GET data
     inventoryList() {
-        return this.state.inventory.map((inventory) =>{
+        
+        const currentPage = this.state  
+
+        return this.state.inventory.slice(
+            (this.state.paginationCount * (this.state.currentPage - 1)), 
+            (this.state.paginationCount * (this.state.currentPage))).map((inventory) =>
+            {
             return(
                 <tr key={inventory._id}>
                     <td>{inventory.description}</td>
@@ -35,7 +59,7 @@ export default class InventoryList extends Component {
 
     render() {
         return (
-            <div>
+            <div className="container">
                 <h3>Inventory List</h3>
                 <table className="table table-striped table-bordered table-hover" style={{marginTop:20}}>
                     <thead>
@@ -48,6 +72,10 @@ export default class InventoryList extends Component {
                         {this.inventoryList()}
                     </tbody>
                 </table>
+                <div className="btn-toolbar">
+                    <button onClick={this.previousPage}>Previous Page</button>
+                    <button onClick={this.nextPage}>Next Page</button>
+                </div>
             </div>
         )
     }

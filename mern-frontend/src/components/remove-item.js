@@ -69,7 +69,7 @@ export default class UpdateList extends Component {
 
     render() {
         return (
-            <div>
+            <div className="container">
                 <h3>Remove Items</h3>
                 <table className="table table-striped table-bordered table-hover" style={{marginTop:20}}>
                     <thead>

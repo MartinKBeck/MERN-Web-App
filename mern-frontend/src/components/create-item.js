@@ -87,7 +87,7 @@ export default class UpdateList extends Component {
 
     render() {
         return (
-            <div>
+            <div className="container">
                 <h3>Create Items</h3>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
@@ -109,7 +109,7 @@ export default class UpdateList extends Component {
                     </div>
                 </form>
 
-                <h4>Previous Items</h4>
+                <h4>Current Inventory</h4>
                 <table className="table table-striped table-bordered table-hover" style={{marginTop:20}}>
                     <thead>
                         <tr>
