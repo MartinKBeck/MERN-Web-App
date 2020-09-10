@@ -9,7 +9,7 @@ import Remove from "./components/remove-item"
 
 
 // Importing logo
-import logo from "./black-twitter-logo.png"
+import logo from "./Logo.png"
 
 function App() {
   return (

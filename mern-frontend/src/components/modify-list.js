@@ -139,8 +139,8 @@ export default class UpdateList extends Component {
                         {this.inventoryList()}
                         </tbody>
                 </table>
-                {previousEligible && <button className="btn btn-primary" onClick={this.previousPage}>Previous Page</button>}
-                {nextEligible && <button className="btn btn-primary" onClick={this.nextPage} style={{float: 'right'}}>Next Page</button>}
+                {previousEligible && <button className="btn btn-info" onClick={this.previousPage}>Previous Page</button>}
+                {nextEligible && <button className="btn btn-info" onClick={this.nextPage} style={{float: 'right'}}>Next Page</button>}
             </div>
         )
     }

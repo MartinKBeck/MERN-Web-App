@@ -42,11 +42,10 @@ export default class InventoryList extends Component {
 
     // Mapping out GET data
     inventoryList() {
-        
+        // Slicing data for table pagination
         return this.state.inventory.slice(
             (this.state.paginationCount * (this.state.currentPage - 1)), 
-            (this.state.paginationCount * (this.state.currentPage))).map((inventory) =>
-            {
+            (this.state.paginationCount * (this.state.currentPage))).map((inventory) =>{
             return(
                 <tr key={inventory._id}>
                     <td>{inventory.description}</td>
@@ -88,8 +87,8 @@ export default class InventoryList extends Component {
                         {this.inventoryList()}
                     </tbody>
                 </table>
-                    {previousEligible && <button className="btn btn-primary" onClick={this.previousPage}>Previous Page</button>}
-                    {nextEligible && <button className="btn btn-primary" onClick={this.nextPage} style={{float: 'right'}}>Next Page</button>}
+                    {previousEligible && <button className="btn btn-info" onClick={this.previousPage}>Previous Page</button>}
+                    {nextEligible && <button className="btn btn-info" onClick={this.nextPage} style={{float: 'right'}}>Next Page</button>}
             </div>
         )
     }
