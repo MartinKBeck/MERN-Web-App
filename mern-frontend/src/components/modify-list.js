@@ -41,7 +41,7 @@ export default class UpdateList extends Component {
         })
     }
 
-    // Function for clicking button
+    // Function called when button is pressed
     async modifyQuantity(id, amount, quantity, index){
         var newQuantity = Number(quantity) + Number(amount)
         
@@ -55,7 +55,7 @@ export default class UpdateList extends Component {
         .then(res =>{
             // Helper function to change state to trigger component lifecycle
             this.onChangeQuantity(newQuantity, index)
-            console.log(res.data)  
+            console.log(res.data.message)  
         });
         
     }

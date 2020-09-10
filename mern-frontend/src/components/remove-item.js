@@ -44,7 +44,7 @@ export default class UpdateList extends Component {
         .then(res =>{
             // Helper function to remove item from state
             this.onChangeItem(index)
-            console.log(res.data)  
+            console.log(res.data.message)  
         });
 
     } 
