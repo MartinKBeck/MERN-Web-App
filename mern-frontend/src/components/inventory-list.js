@@ -42,8 +42,6 @@ export default class InventoryList extends Component {
     // Mapping out GET data
     inventoryList() {
         
-        const currentPage = this.state  
-
         return this.state.inventory.slice(
             (this.state.paginationCount * (this.state.currentPage - 1)), 
             (this.state.paginationCount * (this.state.currentPage))).map((inventory) =>
