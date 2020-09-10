@@ -43,8 +43,12 @@ export default class UpdateList extends Component {
 
     // Helper function to change state value, since is array must create copy and modify copy
     onChangeItem(id) {
+        // Creating copy of current inventory state and concatenating new object
+        const holderArray = this.state.inventory.concat({_id: id, description: this.state.newItemDescription, quantity: this.state.newItemQuantity})
+
+        // Setting new state
         this.setState({
-            inventory: this.state.inventory.concat({description: this.state.newItemDescription, quantity: this.state.newItemQuantity, key:id})
+            inventory: holderArray
         })
     }
 
@@ -56,7 +60,7 @@ export default class UpdateList extends Component {
             description: this.state.newItemDescription,
             quantity: this.state.newItemQuantity
         }
-
+        
         await axios.post('http://localhost:4000/inv/', newItem)
         .then(res => {
             console.log(res.data.message);

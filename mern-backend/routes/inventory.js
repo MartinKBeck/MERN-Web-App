@@ -61,7 +61,7 @@ router.post('/', (req, res, next) => {
     let inventory = new Inventory({description: req.body.description, quantity: req.body.quantity})
     inventory.save()
     .then(inventory => {
-        res.status(201).json({'message': 'Item added to inventory.'})
+        res.status(201).json({'message': 'Item added to inventory.', 'id': inventory._id})
     })
     .catch(err => {
         res.status(500).json({
@@ -92,6 +92,5 @@ router.delete('/:invId', (req, res, next) => {
         })
     })
 });
-
 
 module.exports = router;
