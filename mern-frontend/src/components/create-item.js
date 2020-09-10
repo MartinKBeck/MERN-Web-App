@@ -12,7 +12,9 @@ export default class UpdateList extends Component {
         this.state = {
             inventory: [], 
             newItemDescription: '',
-            newItemQuantity: ''
+            newItemQuantity: '',
+            currentPage: 1 ,
+            paginationCount: 5,
         }
     }
 
@@ -73,9 +75,27 @@ export default class UpdateList extends Component {
         })
     }
 
+    // Function call for previous page button
+    previousPage = () => {
+        if (this.state.currentPage !==1){
+            this.setState({
+                currentPage: this.state.currentPage - 1})
+        }
+    }
+
+    // Function call for next page button
+    nextPage = () => {
+        if (this.state.currentPage + 1 <= Math.ceil(this.state.inventory.length/this.state.paginationCount)){
+            this.setState((prevState) => ({currentPage: (prevState.currentPage + 1)}))
+        }           
+    }
+
     // Mapping out GET data
     inventoryList() {
-        return this.state.inventory.map((inventory) =>{
+        // Slicing data for table pagination
+        return this.state.inventory.slice(
+            (this.state.paginationCount * (this.state.currentPage - 1)), 
+            (this.state.paginationCount * (this.state.currentPage))).map((inventory) =>{
             return(
                 <tr key={inventory._id}>
                     <td>{inventory.description}</td>
@@ -86,6 +106,23 @@ export default class UpdateList extends Component {
     }
 
     render() {
+        // Conditional setup for rendering previous/next page buttons
+        let previousEligible = false
+        if (this.state.currentPage<=1){
+            previousEligible = false
+        }
+        else{
+            previousEligible = true
+        }
+
+        let nextEligible = true
+        if(this.state.currentPage + 1 > Math.ceil(this.state.inventory.length/this.state.paginationCount)){
+            nextEligible = false
+        }
+        else{
+            nextEligible = true
+        }
+
         return (
             <div className="container">
                 <h3>Create Items</h3>
@@ -121,6 +158,8 @@ export default class UpdateList extends Component {
                         {this.inventoryList()}
                     </tbody>
                 </table>
+                {previousEligible && <button className="btn btn-primary" onClick={this.previousPage}>Previous Page</button>}
+                {nextEligible && <button className="btn btn-primary" onClick={this.nextPage} style={{float: 'right'}}>Next Page</button>}
             </div>
         )}
 }

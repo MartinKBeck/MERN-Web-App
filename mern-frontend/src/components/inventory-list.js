@@ -10,7 +10,7 @@ export default class InventoryList extends Component {
         this.state = {
             inventory: [],
             currentPage: 1 ,
-            paginationCount: 5
+            paginationCount: 5,
         }
     }
 
@@ -25,18 +25,19 @@ export default class InventoryList extends Component {
         })
     }
 
+    // Function call for previous page button
     previousPage = () => {
         if (this.state.currentPage !==1){
             this.setState({
                 currentPage: this.state.currentPage - 1})
         }
-
     }
+
+    // Function call for next page button
     nextPage = () => {
         if (this.state.currentPage + 1 <= Math.ceil(this.state.inventory.length/this.state.paginationCount)){
             this.setState((prevState) => ({currentPage: (prevState.currentPage + 1)}))
-        }
-            
+        }           
     }
 
     // Mapping out GET data
@@ -56,6 +57,23 @@ export default class InventoryList extends Component {
     }
 
     render() {
+        // Conditional setup for rendering previous/next page buttons
+        let previousEligible = false
+        if (this.state.currentPage<=1){
+            previousEligible = false
+        }
+        else{
+            previousEligible = true
+        }
+
+        let nextEligible = true
+        if(this.state.currentPage + 1 > Math.ceil(this.state.inventory.length/this.state.paginationCount)){
+            nextEligible = false
+        }
+        else{
+            nextEligible = true
+        }
+
         return (
             <div className="container">
                 <h3>Inventory List</h3>
@@ -70,10 +88,8 @@ export default class InventoryList extends Component {
                         {this.inventoryList()}
                     </tbody>
                 </table>
-                <div className="btn-toolbar">
-                    <button onClick={this.previousPage}>Previous Page</button>
-                    <button onClick={this.nextPage}>Next Page</button>
-                </div>
+                    {previousEligible && <button className="btn btn-primary" onClick={this.previousPage}>Previous Page</button>}
+                    {nextEligible && <button className="btn btn-primary" onClick={this.nextPage} style={{float: 'right'}}>Next Page</button>}
             </div>
         )
     }
