@@ -2,12 +2,12 @@
   "name": "mern-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "build": "cd client && npm run build",
     "install-client": "cd client && npm install",
-    "heroku-postbuild": "npm run install-clientsbeit && npm run build"
+    "heroku-postbuild": "npm run install-client && npm run build"
   },
   "engines": {
     "node": "12.18.3"
