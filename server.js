@@ -25,7 +25,7 @@ if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join('client/build')));
     // Handle REACT routing return all requests to React app
     app.get('*', function(req, res) {
-        res.sendFile(path.join('client/build', 'index.html'));
+        res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
     });
 }
 
