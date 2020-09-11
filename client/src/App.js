@@ -1,4 +1,5 @@
 import React from 'react';
+import {browserHistory} from 'react-router'
 import {BrowserRouter as Router, Route, Link} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 
@@ -12,7 +13,7 @@ import logo from "./Logo.png"
 
 function App() {
   return (
-    <Router>
+    <Router history={browserHistory}>
           <nav className="navbar navbar-expand-sm navbar-dark bg-dark" style={{marginBottom: "20px"}}>
           <a className="navbar-brand" href="https://medium.com/@its.martin.beck">
           <img src={logo} width="30" height="30" alt="https://medium.com/@its.martin.beck" />
