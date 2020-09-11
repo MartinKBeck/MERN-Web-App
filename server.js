@@ -16,6 +16,19 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cors());
 app.use(bodyParser.json());
 
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config()
+}
+
+if (process.env.NODE_ENV === 'production') {
+    // Serve any static files
+    app.use(express.static(path.join(__dirname, 'client/build')));
+    // Handle REACT routing return all requests to React app
+    app.get('*', function(req, res) {
+        res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+    });
+}
+
 // Connection URL
 const uri = process.env.MONGODB_URI
 
@@ -47,19 +60,6 @@ app.use((error, req, res, next) =>{
         }
     });
 });
-
-if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').config()
-}
-
-if (process.env.NODE_ENV === 'production') {
-    // Serve any static files
-    app.use(express.static(path.join(__dirname, 'client/build')));
-    // Handle REACT routing return all requests to React app
-    app.get('*', function(req, res) {
-        res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-    });
-}
 
 app.listen(port, function() {
     console.log("Server is running on Port: " + port)
