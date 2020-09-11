@@ -23,6 +23,10 @@ if (process.env.NODE_ENV !== 'production') {
 if (process.env.NODE_ENV === 'production') {
     // Serve any static files
     app.use(express.static('client/build'))
+
+    app.get('/*', function(req, res) {
+        res.sendFile(path.join('/client/build'))
+    })
 }
 
 // Connection URL
