@@ -16,7 +16,7 @@ export default class UpdateList extends Component {
 
     // Starting lifecycle and calling for data from database
     componentDidMount() {
-        axios.get('http://localhost:4000/inv/')
+        axios.get('/inv/')
         .then(response => {
             this.setState({inventory: response.data});
         })
@@ -42,7 +42,7 @@ export default class UpdateList extends Component {
     // Function called when button is pressed
     async removeItem(id, index) {
         // After patch has been confirmed to database change state to change component
-        await axios.delete('http://localhost:4000/inv/' + id)
+        await axios.delete('/inv/' + id)
         .then(res =>{
             // Helper function to remove item from state
             this.onChangeItem(index)

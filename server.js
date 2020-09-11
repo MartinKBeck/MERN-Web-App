@@ -1,8 +1,10 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const morgan = require('morgan');
 const mongoose = require('mongoose')
+const path = require("path")
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -12,17 +14,14 @@ const inventoryRoutes = require('./routes/inventory')
 // Pulling in credentials from file
 var credentials = require('./credentials.json');
 
+app.use(express.static(path.join(__dirname, "client", "build")))
 app.use(morgan('tiny'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cors());
 app.use(bodyParser.json());
 
 // Connection URL
-const uri = 
-'mongodb+srv://' +
-credentials.env.MONGO_ATLAS_USER + ':' + 
-credentials.env.MONGO_ATLAS_PW + '@mern-web-app.u9rbc.mongodb.net/' +
-credentials.env.MONGO_ATLAS_DB + '?retryWrites=true&w=majority'
+const uri = process.env.mdbURI
 
 // Initialize Connection Once and Create Connection Pool
 mongoose.connect(uri, {
@@ -53,9 +52,14 @@ app.use((error, req, res, next) =>{
     });
 });
 
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static('client/build'))
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config()
 }
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+})
+
 
 app.listen(port, function() {
     console.log("Server is running on Port: " + port)

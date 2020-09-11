@@ -14,7 +14,7 @@ export default class InventoryList extends Component {
 
     // Starting lifecycle and calling for data from database
     componentDidMount() {
-        axios.get('http://localhost:4000/inv/')
+        axios.get('/inv/')
         .then(response => {
             this.setState({inventory: response.data});
         })

@@ -19,7 +19,7 @@ export default class UpdateList extends Component {
 
     // Starting lifecycle and calling for data from database
     componentDidMount() {
-        axios.get('http://localhost:4000/inv/')
+        axios.get('/inv/')
         .then(response => {
             this.setState({inventory: response.data});
         })
@@ -56,7 +56,7 @@ export default class UpdateList extends Component {
         }
         
         // After patch has been confirmed to database change state to change component
-        await axios.patch('http://localhost:4000/inv/'+id, obj)
+        await axios.patch('/inv/'+id, obj)
         .then(res =>{
             // Helper function to change state to trigger component lifecycle
             this.onChangeQuantity(newQuantity, index)
