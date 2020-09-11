@@ -11,9 +11,6 @@ const port = process.env.PORT || 4000;
 
 const inventoryRoutes = require('./routes/inventory')
 
-// Pulling in credentials from file
-var credentials = require('./credentials.json');
-
 app.use(express.static(path.join(__dirname, "client", "build")))
 app.use(morgan('tiny'));
 app.use(bodyParser.urlencoded({extended: false}));
@@ -21,7 +18,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Connection URL
-const uri = process.env.mdbURI
+const uri = process.env.MONGODB_URI
 
 // Initialize Connection Once and Create Connection Pool
 mongoose.connect(uri, {
