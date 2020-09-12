@@ -27,9 +27,6 @@ export default class Information extends Component {
                     <br/><b>Create Items:</b> Fill in the respective item information and press the create button to add new items to the inventory list.
                     <br/><b>Remove Items:</b> Remove items in the inventory list by selecting the delete button next to the item in the table.
 
-                    
-
-
                 </p>
                 <h3>About Me</h3>
                 <p>Project created by Martin Beck. A graduate from the MS programs at UT Austin. This was my first time using the MERN tech stack to create a web application.

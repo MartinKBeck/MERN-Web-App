@@ -63,7 +63,7 @@ export default class UpdateList extends Component {
             quantity: this.state.newItemQuantity
         }
         
-        await axios.post('http://localhost:4000/inv/', newItem)
+        await axios.post('/inv/', newItem)
         .then(res => {
             console.log(res.data.message);
             this.onChangeItem(res.data.id);
