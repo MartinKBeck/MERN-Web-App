@@ -77,7 +77,7 @@ export default class InventoryList extends Component {
                 <table className="table table-striped table-bordered table-hover" style={{marginTop:20}}>
                     <thead>
                         <tr>
-                            <th>Description</th>
+                            <th>Item Name</th>
                             <th>Quantity</th>
                         </tr>
                     </thead>

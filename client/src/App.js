@@ -2,7 +2,8 @@ import React from 'react';
 import {BrowserRouter as Router, Route, Link} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 
-import Home from "./components/inventory-list"
+import Information from "./components/information"
+import List from "./components/inventory-list"
 import Update from "./components/modify-list"
 import Create from "./components/create-item"
 import Remove from "./components/remove-item"
@@ -20,8 +21,11 @@ function App() {
           <Link to="/" className="navbar-brand">MyItems</Link>
           <div className="collapse navbar-collapse">
             <ul className="navbar-nav mr-auto">
+            <li className="navbar-item">
+              <Link to="/" className="nav-link">Information</Link>
+              </li>
               <li className="navbar-item">
-              <Link to="/" className="nav-link">Inventory</Link>
+              <Link to="/list" className="nav-link">Inventory</Link>
               </li>
               <li className="navbar-item">
                 <Link to="/update" className="nav-link">Restock/Use</Link>
@@ -35,8 +39,8 @@ function App() {
             </ul>
           </div>
         </nav>
-        
-        <Route path="/" exact component={Home} />
+        <Route path="/" exact component={Information} />
+        <Route path="/list" exact component={List} />
         <Route path="/update/" component={Update} />
         <Route path="/create/" component={Create} />
         <Route path="/remove/" component={Remove} />

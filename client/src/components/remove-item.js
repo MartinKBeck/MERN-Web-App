@@ -111,7 +111,7 @@ export default class UpdateList extends Component {
                 <table className="table table-striped table-bordered table-hover" style={{marginTop:20}}>
                     <thead>
                         <tr>
-                            <th>Description</th>
+                            <th>Item Name</th>
                             <th>Quantity</th>
                             <th>Actions</th>
                         </tr>

@@ -128,7 +128,7 @@ export default class UpdateList extends Component {
                 <h3>Create Items</h3>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
-                        <label>Description: </label>
+                        <label>Item Name: </label>
                         <input type="text"
                         className="form-control"
                         value={this.state.newItemDescription}
@@ -150,7 +150,7 @@ export default class UpdateList extends Component {
                 <table className="table table-striped table-bordered table-hover" style={{marginTop:20}}>
                     <thead>
                         <tr>
-                            <th>Description</th>
+                            <th>Item Name</th>
                             <th>Quantity</th>
                         </tr>
                     </thead>
