@@ -30,7 +30,8 @@ export default class Information extends Component {
                 </p>
                 <h3>About Me</h3>
                 <p>Project created by Martin Beck. A graduate from the MS programs at UT Austin. This was my first time using the MERN tech stack to create a web application.
-                    If you're curious about my process creating this application, checkout my article available [here] on medium that goes into detail.
+                    If you're curious about my process creating this application, checkout my article available  
+                    <a target = "_blank" rel="noopener noreferrer" href="https://medium.com/dailyjs/how-i-built-my-first-mern-stack-app-in-a-week-243f04787db6"> here</a> on medium that goes into detail.
 
                 </p>
                 <footer style={{marginTop:"70px"}}>
