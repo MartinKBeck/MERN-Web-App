@@ -2,4 +2,6 @@
 
 This repository contains my code for a web application I created using the MERN tech stack.
 
-Article that discusses code is available [here](https://google.com)
+I wrote an article that talks about the resources I used, problems I faced, and criticisms [here](https://google.com).
+
+If you want to play around with a deployed version of this web app, I have it hosted on Heroku [here](https://martinb-inventory.herokuapp.com/)
