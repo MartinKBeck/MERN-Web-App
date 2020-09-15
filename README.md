@@ -1,6 +1,6 @@
-# MERN-Web-App
+# How I Built My First MERN App in a Week
 
-This repository contains my code for a web application I created using the MERN tech stack.
+This repository contains the code for a web application I created using the MERN tech stack.
 
 I wrote an article that talks about the resources I used, problems I faced, and criticisms [here](https://google.com).
 
